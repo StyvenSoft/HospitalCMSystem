@@ -156,7 +156,7 @@ public class Vaccines extends javax.swing.JFrame {
 
         jLabel5.setText("Fecha Aplicada");
 
-        jLabel6.setText("Fecha Segunda Dosis");
+        jLabel6.setText("Fecha Segunda Dosis (Si aplica)");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -206,6 +206,11 @@ public class Vaccines extends javax.swing.JFrame {
         );
 
         jButton3.setText("Atrás");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
 
         jButton2.setText("Guardar");
 
@@ -257,6 +262,13 @@ public class Vaccines extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        MainMenu viewMenu = new MainMenu();
+        viewMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments

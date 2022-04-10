@@ -108,12 +108,17 @@ public class Officers extends javax.swing.JFrame {
         jButton1.setText("Guardar");
 
         jButton2.setText("Atrás");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Personales"));
 
         jLabel1.setText("Nombres");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Cédula de Ciudadania", "Tarjeta de Identidad", "Cédula de Extrangería", "Pasaporte", "Registro Civil" }));
 
         jLabel4.setText("Tipo Identificación");
 
@@ -123,7 +128,7 @@ public class Officers extends javax.swing.JFrame {
 
         jLabel9.setText("Tipo Funcionario");
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Item 2", "Item 3", "Item 4" }));
+        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Epidemiólogo", "Auxiliar Enfermería" }));
 
         jLabel3.setText("Número Identificación");
 
@@ -137,7 +142,7 @@ public class Officers extends javax.swing.JFrame {
             }
         });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Item 2", "Item 3", "Item 4" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Medicina", "Enfermería", "Farmacia" }));
 
         jLabel8.setText("Profesión");
 
@@ -314,6 +319,13 @@ public class Officers extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        MainMenu viewMenu = new MainMenu();
+        viewMenu.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
