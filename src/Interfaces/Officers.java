@@ -260,7 +260,7 @@ public class Officers extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tipo Identificación", "Número Identificación", "Nombre Completo", "Tipo Funcionario", "Fecha Nacimiento", "Correo Electrónico", "Profesión", "Celular", "Género"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

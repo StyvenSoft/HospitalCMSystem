@@ -214,7 +214,7 @@ public class Vaccines extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tipo Identificación", "Número Identificación", "Nombre Paciente", "Tipo Vacuna", "Dosis Aplicada", "Fecha Aplicación", "Fecha Segunda Dosis"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

@@ -228,7 +228,7 @@ public class Patients extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Tipo Identificación", "Número Identificación", "Nombre Paciente", "Fecha Nacimiento", "Dirección", "Número Celular", "Grupo Edad", "Género"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
