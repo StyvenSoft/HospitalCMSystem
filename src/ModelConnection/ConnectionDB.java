@@ -16,29 +16,20 @@ import java.sql.SQLException;
  */
 public class ConnectionDB {
     Connection conn = null;
-    
-    public void connection() throws ClassNotFoundException {
-        setupConnection();
-    }
-    
-    public void setupConnection() throws ClassNotFoundException{
-        String host = "localhost";
+        
+    public void setupConnection(){
+        
+        String dataBase = "hospital_cms_db";
+        String url = "jdbc:mysql://localhost:3307/"+dataBase;
         String user = "root";
         String pass = "";
-        String dataBase = "hospital_cms_db";
-        String driver = "com.mysql.jdbc.Driver";
         
         try {
-            
-            Class.forName(driver);
-            
-            String newConnectionURL = "jdbc:mysql://"+host+"/"+dataBase+"?"+"user="+user+"&password="+pass;
-            conn = DriverManager.getConnection(newConnectionURL);
-            
+            conn = DriverManager.getConnection(url, user, pass);
             System.out.println("Conectado!!");
          
         }catch(SQLException e){
-            System.out.println(e.getMessage());
+            System.out.println("Error" + e.getMessage());
         }
     }
     

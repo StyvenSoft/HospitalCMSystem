@@ -5,8 +5,6 @@
 package Interfaces;
 
 import ModelConnection.ConnectionDB;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -200,11 +198,8 @@ public class Login extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         ConnectionDB conex = new ConnectionDB();
-        try {
-            conex.setupConnection();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        conex.setupConnection();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
