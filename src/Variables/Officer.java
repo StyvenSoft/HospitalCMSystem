@@ -4,6 +4,10 @@
  */
 package Variables;
 
+import ModelConnection.ConnectionDB;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+
 /**
  *
  * @author Acer
@@ -44,6 +48,19 @@ public class Officer extends Person {
         this.email = email;
         this.profession = profession;
     }
+    
+    private static ConnectionDB connex = new ConnectionDB();
+        
+    public void insertOfficer() throws SQLException {
+        
+        String selection = "INSERT INTO `funcionario`(`id_funcionario`, `tipo_id`, `numero_id_funcionario`, `nombres_funcionario`, `apellidos_funcionario`, `tipo_funcionario`, `fecha_nacimiento`, `correo_electronico`, `profesion`, `num_celular`, `genero`)"
+                + " VALUES (?,?,?,?,?,?,?)";
+        
+        PreparedStatement preStat = connex.conn.PreparedStatement(selection);
+        preStat.setString(1, officer_type);
+        
+    }
+    
     
     
     
