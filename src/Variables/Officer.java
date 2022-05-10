@@ -53,11 +53,18 @@ public class Officer extends Person {
         
     public void insertOfficer() throws SQLException {
         
-        String selection = "INSERT INTO `funcionario`(`id_funcionario`, `tipo_id`, `numero_id_funcionario`, `nombres_funcionario`, `apellidos_funcionario`, `tipo_funcionario`, `fecha_nacimiento`, `correo_electronico`, `profesion`, `num_celular`, `genero`)"
-                + " VALUES (?,?,?,?,?,?,?)";
+        connex.setupConnection();
+        String selection = "INSERT INTO `funcionario`(`id_funcionario`, `tipo_id`, `numero_id_funcionario`, `nombres_funcionario`, `apellidos_funcionario`, `tipo_funcionario`, `fecha_nacimiento`, `correo_electronico`, `profesion`, `num_celular`, `genero`)"+ " VALUES (?,?,?,?,?,?,?)";
         
-        PreparedStatement preStat = connex.conn.PreparedStatement(selection);
-        preStat.setString(1, officer_type);
+        PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+        ps.setInt(1, id);
+        ps.setString(2, id_type);
+        ps.setString(3, names);
+        ps.setString(4, lastNames);
+        ps.setString(5, birtDate);
+        ps.setString(6, phoneNumber);
+        ps.setString(7, gender);
         
     }
     

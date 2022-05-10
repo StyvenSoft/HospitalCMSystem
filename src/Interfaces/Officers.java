@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Interfaces;
+
 import java.sql.SQLException;
 import Variables.Officer;
 /**
@@ -366,6 +367,8 @@ void create_officer() throws SQLException {
             jT_num_phone.getText(),
             jCB_gender.getSelectedItem().toString()
     );
+    
+    offi.insertOfficer();
 }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

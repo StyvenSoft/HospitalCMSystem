@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author Acer
  */
 public class ConnectionDB {
-    Connection conn = null;
+    public Connection conn;
         
     public void setupConnection(){
         
