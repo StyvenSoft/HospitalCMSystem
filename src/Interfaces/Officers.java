@@ -6,6 +6,9 @@ package Interfaces;
 
 import java.sql.SQLException;
 import Variables.Officer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Acer
@@ -107,6 +110,11 @@ public class Officers extends javax.swing.JFrame {
         );
 
         jButton1.setText("Guardar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Atrás");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -143,7 +151,7 @@ public class Officers extends javax.swing.JFrame {
             }
         });
 
-        jCB_profession.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Medicina", "Enfermería", "Farmacia" }));
+        jCB_profession.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Medicina", "Enfermeria", "Farmacia" }));
 
         jLabel8.setText("Profesión");
 
@@ -318,6 +326,22 @@ public class Officers extends javax.swing.JFrame {
         viewMenu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        try {
+            // TODO add your handling code here:
+            create_officer();
+            System.out.println("Registro Almacenado!");
+            JOptionPane.showMessageDialog(null, "Registro Almacenado");
+            jT_num_id.setText("");
+            jT_name.setText("");
+            jT_lastname.setText("");
+            jT_email.setText("");
+            jT_num_phone.setText("");
+        } catch (SQLException ex) {
+            Logger.getLogger(Officers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

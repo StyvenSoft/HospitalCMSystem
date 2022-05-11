@@ -147,6 +147,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Guardar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
@@ -377,7 +380,7 @@
               <StringArray count="4">
                 <StringItem index="0" value="Seleccione"/>
                 <StringItem index="1" value="Medicina"/>
-                <StringItem index="2" value="Enfermer&#xed;a"/>
+                <StringItem index="2" value="Enfermeria"/>
                 <StringItem index="3" value="Farmacia"/>
               </StringArray>
             </Property>
