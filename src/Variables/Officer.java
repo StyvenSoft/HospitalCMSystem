@@ -58,17 +58,24 @@ public class Officer extends Person {
         
         PreparedStatement ps = connex.conn.prepareStatement(selection);
         
-        ps.setInt(1, id);
-        ps.setString(2, id_type);
-        ps.setString(3, names);
-        ps.setString(4, lastNames);
-        ps.setString(5, officer_type);
-        ps.setString(6, birtDate);
-        ps.setString(7, email);
-        ps.setString(8, profession);
-        ps.setString(9, phoneNumber);
-        ps.setString(10, gender);
-        ps.executeUpdate();
+        try{
+            ps.setInt(1, id);
+            ps.setString(2, id_type);
+            ps.setString(3, names);
+            ps.setString(4, lastNames);
+            ps.setString(5, officer_type);
+            ps.setString(6, birtDate);
+            ps.setString(7, email);
+            ps.setString(8, profession);
+            ps.setString(9, phoneNumber);
+            ps.setString(10, gender);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println(e);
+        } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
         
     }
    

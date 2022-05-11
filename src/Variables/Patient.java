@@ -4,6 +4,10 @@
  */
 package Variables;
 
+import ModelConnection.ConnectionDB;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 /**
  *
  * @author Acer
@@ -35,5 +39,31 @@ public class Patient extends Person {
         this.age_group = age_group;
     }
     
-    
+     private static ConnectionDB connex = new ConnectionDB();
+        
+    public void insertPatient() throws SQLException {
+        
+        connex.setupConnection();
+        String selection = "INSERT INTO `paciente`(`id_paciente`, `tipo_id`, `nombres_paciente`, `apellidos_paciente`, `fecha_nacimiente`, `direccion_residencia`, `num_celular`, `grupo_edad`, `genero_paciente`)"+ " VALUES (?,?,?,?,?,?,?,?,?)";
+        
+        PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+        try{
+            ps.setInt(1, id);
+            ps.setString(2, id_type);
+            ps.setString(3, names);
+            ps.setString(4, lastNames);
+            ps.setString(5, birtDate);
+            ps.setString(6, recidence_adress);
+            ps.setString(7, phoneNumber);
+            ps.setString(8, age_group);
+            ps.setString(9, gender);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println(e);
+        } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
+    }
 }
