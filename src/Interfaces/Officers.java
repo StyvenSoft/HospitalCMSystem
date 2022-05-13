@@ -4,11 +4,16 @@
  */
 package Interfaces;
 
+import ModelConnection.ConnectionDB;
 import java.sql.SQLException;
 import Variables.Officer;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Acer
@@ -21,6 +26,7 @@ public class Officers extends javax.swing.JFrame {
     public Officers() {
         initComponents();
         setLocationRelativeTo(null);
+         listingOfficer();
     }
 
     /**
@@ -65,7 +71,7 @@ public class Officers extends javax.swing.JFrame {
         jT_username = new javax.swing.JTextField();
         jCB_gender = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTOfficers = new javax.swing.JTable();
         jButton4 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
 
@@ -260,15 +266,15 @@ public class Officers extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTOfficers.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tipo Identificación", "Número Identificación", "Nombre Completo", "Tipo Funcionario", "Fecha Nacimiento", "Correo Electrónico", "Profesión", "Celular", "Género"
+                "id_funcionario", "tipo_id", "nombres_funcionario", "apellidos_funcionario", "tipo_funcionario", "fecha_nacimiento", "correo_electronico", "profesion", "num_celular", "genero"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(jTOfficers);
 
         jButton4.setText("Editar");
 
@@ -394,6 +400,46 @@ void create_officer() throws SQLException {
     
     offi.insertOfficer();
 }
+
+    DefaultTableModel model;
+    private static ConnectionDB connex = new ConnectionDB();
+    
+    public void listingOfficer() {
+       //List<Officer> ListaCl = new ArrayList();
+       String sql = "SELECT * FROM `funcionario`";
+       ResultSet rs;
+       
+       try {
+           //con = cn.getConnection();
+           //ps = con.prepareStatement(sql);
+           connex.setupConnection();
+           PreparedStatement ps = connex.conn.prepareStatement(sql);
+           rs = ps.executeQuery();
+           
+           Object[] officer = new Object[10];
+           
+           model = (DefaultTableModel) jTOfficers.getModel();
+           
+           while(rs.next()){
+               officer[0] = rs.getInt("id_funcionario");
+               officer[1] = rs.getString("tipo_id");
+               officer[2] = rs.getString("nombres_funcionario");
+               officer[3] = rs.getString("apellidos_funcionario");
+               officer[4] = rs.getString("tipo_funcionario");
+               officer[5] = rs.getString("fecha_nacimiento");
+               officer[6] = rs.getString("correo_electronico");
+               officer[7] = rs.getString("profesion");
+               officer[8] = rs.getString("num_celular");
+               officer[9] = rs.getString("genero");
+               
+               model.addRow(officer);
+           }
+           jTOfficers.setModel(model);
+           
+       } catch (SQLException e) {
+           System.out.println(e.toString());
+       }
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
@@ -425,12 +471,12 @@ void create_officer() throws SQLException {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTOfficers;
     private javax.swing.JTextField jT_email;
     private javax.swing.JTextField jT_lastname;
     private javax.swing.JTextField jT_name;
     private javax.swing.JTextField jT_num_id;
     private javax.swing.JTextField jT_num_phone;
     private javax.swing.JTextField jT_username;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
