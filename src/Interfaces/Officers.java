@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import Variables.Officer;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.List;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -29,6 +29,7 @@ public class Officers extends javax.swing.JFrame {
          listingOfficer();
     }
 
+    private static ConnectionDB connex = new ConnectionDB();
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -279,6 +280,11 @@ public class Officers extends javax.swing.JFrame {
         jButton4.setText("Editar");
 
         jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -336,6 +342,10 @@ public class Officers extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
+            String document = jT_num_id.getText();
+            if("".equals(document)){
+                JOptionPane.showMessageDialog(null, "Ingresa el numero de documento!");
+            } 
             create_officer();
             System.out.println("Registro Almacenado!");
             JOptionPane.showMessageDialog(null, "Registro Almacenado");
@@ -344,10 +354,43 @@ public class Officers extends javax.swing.JFrame {
             jT_lastname.setText("");
             jT_email.setText("");
             jT_num_phone.setText("");
+            listingOfficer();
         } catch (SQLException ex) {
             Logger.getLogger(Officers.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        String document = jT_num_id.getText();
+        if("".equals(document)){
+            JOptionPane.showMessageDialog(null, "Ingresa el numero de documento!");
+        } else {
+            try{
+                connex.setupConnection();
+                Statement stat = connex.conn.createStatement();
+                
+                ResultSet rset = stat.executeQuery("SELECT * FROM funcionario WHERE id_funcionario='"+ document+"'");
+                
+                if(rset.next()){
+                    //jT_num_id.setText(rset.getString("id_funcionario"));
+                    jT_name.setText(rset.getString("nombres_funcionario"));
+                    jT_lastname.setText(rset.getString("apellidos_funcionario"));
+                    // jCB_id_type.setSelectedItem(rset.getString("tipo_id"));
+                    jT_num_phone.setText(rset.getString("num_celular"));
+                    // jCB_Officer_type.setText(rset.getString("apellidos_funcionario"));
+                    jT_email.setText(rset.getString("correo_electronico"));
+                    // jCB_profession.setText(rset.getString("apellidos_funcionario"));
+                       JOptionPane.showMessageDialog(null, "Registro encontrado!");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Registro no encontrado!");
+                }
+                
+            } catch (SQLException ex) {
+                
+            }
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -401,14 +444,13 @@ void create_officer() throws SQLException {
     offi.insertOfficer();
 }
 
-    DefaultTableModel model;
-    private static ConnectionDB connex = new ConnectionDB();
     
     public void listingOfficer() {
        //List<Officer> ListaCl = new ArrayList();
        String sql = "SELECT * FROM `funcionario`";
        ResultSet rs;
-       
+       DefaultTableModel model;
+           
        try {
            //con = cn.getConnection();
            //ps = con.prepareStatement(sql);
@@ -419,6 +461,10 @@ void create_officer() throws SQLException {
            Object[] officer = new Object[10];
            
            model = (DefaultTableModel) jTOfficers.getModel();
+           
+           while (model.getRowCount()>0) {
+             model.removeRow(0);
+            }
            
            while(rs.next()){
                officer[0] = rs.getInt("id_funcionario");
@@ -438,7 +484,10 @@ void create_officer() throws SQLException {
            
        } catch (SQLException e) {
            System.out.println(e.toString());
-       }
+       } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
