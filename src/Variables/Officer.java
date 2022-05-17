@@ -83,5 +83,19 @@ public class Officer extends Person {
         
     }
     
-    
+    public void updateOfficer() throws SQLException {
+        connex.setupConnection();
+        String selection = "UPDATE `funcionario` SET `id_funcionario`=?,`tipo_id`=?,`nombres_funcionario`=?,`apellidos_funcionario`=?,`tipo_funcionario`=?,`fecha_nacimiento`=?,`correo_electronico`=?,`profesion`=?,`num_celular`=?,`genero`=? WHERE `id_funcionario`=?";
+        
+        PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+        try{
+            ps.executeUpdate(selection);
+        } catch(SQLException e) {
+            System.err.println(e);
+        } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
+    }
 }

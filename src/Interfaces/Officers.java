@@ -275,9 +275,19 @@ public class Officers extends javax.swing.JFrame {
                 "id_funcionario", "tipo_id", "nombres_funcionario", "apellidos_funcionario", "tipo_funcionario", "fecha_nacimiento", "correo_electronico", "profesion", "num_celular", "genero"
             }
         ));
+        jTOfficers.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTOfficersMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTOfficers);
 
         jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Buscar");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -344,7 +354,7 @@ public class Officers extends javax.swing.JFrame {
             // TODO add your handling code here:
             String document = jT_num_id.getText();
             if("".equals(document)){
-                JOptionPane.showMessageDialog(null, "Ingresa el numero de documento!");
+                JOptionPane.showMessageDialog(null, "Debe ingresa el numero de documento!");
             } 
             create_officer();
             System.out.println("Registro Almacenado!");
@@ -380,7 +390,7 @@ public class Officers extends javax.swing.JFrame {
                     jT_num_phone.setText(rset.getString("num_celular"));
                     // jCB_Officer_type.setText(rset.getString("apellidos_funcionario"));
                     jT_email.setText(rset.getString("correo_electronico"));
-                    // jCB_profession.setText(rset.getString("apellidos_funcionario"));
+                    jCB_profession.addItem(rset.getString("profesion"));
                        JOptionPane.showMessageDialog(null, "Registro encontrado!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Registro no encontrado!");
@@ -391,6 +401,31 @@ public class Officers extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jTOfficersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTOfficersMouseClicked
+        int line = jTOfficers.getSelectedRow();
+        if (line == -1) {
+            JOptionPane.showMessageDialog(null, "No se selecciono!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Se selecciono funcionario!");
+            
+            int num_id = Integer.parseInt((String) jTOfficers.getValueAt(line,0).toString());
+            String name = (String) jTOfficers.getValueAt(line,2);
+            String lastName = (String) jTOfficers.getValueAt(line,3);
+            String email = (String) jTOfficers.getValueAt(line,6);
+            int num_phone = Integer.parseInt((String) jTOfficers.getValueAt(line,8).toString());
+            
+            jT_num_id.setText(""+ num_id);
+            jT_name.setText(name);
+            jT_lastname.setText(lastName);
+            jT_email.setText(email);
+            jT_num_phone.setText(""+num_phone);
+        }
+    }//GEN-LAST:event_jTOfficersMouseClicked
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -488,6 +523,23 @@ void create_officer() throws SQLException {
             connex.closeConnection();
             System.out.println("Conexion cerrada");
         }
+    }
+    
+    void update_officer() throws SQLException {
+        Officer offi = new Officer(
+            jCB_Officer_type.getSelectedItem().toString(),
+            jT_email.getText(),
+            jCB_profession.getSelectedItem().toString(),
+            Integer.parseInt(jT_num_id.getText()),
+            jCB_id_type.getSelectedItem().toString(),       
+            jT_name.getText(),
+            jT_lastname.getText(),
+            jD_birthday.getDate().toString(),
+            jT_num_phone.getText(),
+            jCB_gender.getSelectedItem().toString()
+    );
+    
+    offi.updateOfficer();
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
