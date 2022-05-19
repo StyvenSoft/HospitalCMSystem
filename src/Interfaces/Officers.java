@@ -424,7 +424,24 @@ public class Officers extends javax.swing.JFrame {
     }//GEN-LAST:event_jTOfficersMouseClicked
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String document = jT_num_id.getText();
+            if("".equals(document)){
+                JOptionPane.showMessageDialog(null, "Debe ingresa el numero de documento!");
+            } 
+            update_officer();
+            System.out.println("Registro Almacenado!");
+            JOptionPane.showMessageDialog(null, "Registro Almacenado");
+            jT_num_id.setText("");
+            jT_name.setText("");
+            jT_lastname.setText("");
+            jT_email.setText("");
+            jT_num_phone.setText("");
+            listingOfficer();
+        } catch (SQLException ex) {
+            Logger.getLogger(Officers.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -539,7 +556,18 @@ void create_officer() throws SQLException {
             jCB_gender.getSelectedItem().toString()
     );
     
-    offi.updateOfficer();
+    offi.updateOfficer(
+            Integer.parseInt(jT_num_id.getText()),
+            jCB_id_type.getSelectedItem().toString(),       
+            jT_name.getText(),
+            jT_lastname.getText(),
+            jCB_Officer_type.getSelectedItem().toString(),
+            jD_birthday.getDate().toString(),
+            jT_email.getText(),
+            jCB_profession.getSelectedItem().toString(),
+            jT_num_phone.getText(),
+            jCB_gender.getSelectedItem().toString()
+        );
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

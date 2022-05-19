@@ -83,11 +83,26 @@ public class Officer extends Person {
         
     }
     
-    public void updateOfficer() throws SQLException {
+    public void updateOfficer(int id, String id_type, String names, String lastNames, String officer_type, String birtDate, String email, String profession, String phoneNumber, String gender) throws SQLException {
         connex.setupConnection();
-        String selection = "UPDATE `funcionario` SET `id_funcionario`=?,`tipo_id`=?,`nombres_funcionario`=?,`apellidos_funcionario`=?,`tipo_funcionario`=?,`fecha_nacimiento`=?,`correo_electronico`=?,`profesion`=?,`num_celular`=?,`genero`=? WHERE `id_funcionario`=?";
+        String selection = "UPDATE `funcionario` SET `tipo_id`='"+id_type+"',`nombres_funcionario`='"+names+"',`apellidos_funcionario`='"+lastNames+"',`tipo_funcionario`='"+officer_type+"',`fecha_nacimiento`='"+birtDate+"',`correo_electronico`='"+email+"',`profesion`='"+profession+"',`num_celular`='"+phoneNumber+"',`genero`='"+gender+"' WHERE `id_funcionario`='"+id+"'";
         
+        
+        System.out.println(id);
+        System.out.println(id_type);
+        System.out.println(names);
+        System.out.println(lastNames);
+        System.out.println(officer_type);
+        System.out.println(birtDate);
+        System.out.println(email);
+        System.out.println(profession);
+        System.out.println(phoneNumber);
+        System.out.println(gender);
+
         PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+     
+
         
         try{
             ps.executeUpdate(selection);
