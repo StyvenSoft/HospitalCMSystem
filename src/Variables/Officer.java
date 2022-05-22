@@ -7,10 +7,7 @@ package Variables;
 import ModelConnection.ConnectionDB;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.List;
-import java.sql.ResultSet;
-import javax.swing.table.DefaultTableModel;
+
 
 /**
  *
