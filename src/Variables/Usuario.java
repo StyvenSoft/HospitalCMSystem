@@ -5,7 +5,10 @@
 package Variables;
 
 import ModelConnection.ConnectionDB;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -68,18 +71,6 @@ public class Usuario {
 
     public void setState(String state) {
         this.state = state;
-    }
-    
-    private static ConnectionDB connex = new ConnectionDB();
-    
-    public void login(String username, String password) throws SQLException {
-        
-        connex.setupConnection();
-        
-        String sql = "SELECT * FROM `usuario` WHERE `nombre_usuario` ='"+username+"' AND `password` ='"+password+"' ";
-        
-        
-        
     }
     
     
