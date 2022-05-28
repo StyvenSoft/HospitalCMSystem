@@ -4,6 +4,8 @@
  */
 package Interfaces;
 
+import Variables.Usuario;
+
 /**
  *
  * @author Acer
@@ -13,9 +15,27 @@ public class MainMenu extends javax.swing.JFrame {
     /**
      * Creates new form MainMenu
      */
+    
+    Usuario usu;
+    
     public MainMenu() {
         initComponents();
         setLocationRelativeTo(null);
+    }
+    
+    public MainMenu(Usuario nusu) {
+        initComponents();
+        setLocationRelativeTo(null);
+        this.usu = nusu;
+        
+        String username = nusu.getUsername();
+        System.out.println(username);
+        
+        jName_user.setText(username);
+        
+        if("master".equals(nusu.getUser_type())) {
+            jPanel8.setVisible(false);
+        }
     }
 
     /**
@@ -31,7 +51,7 @@ public class MainMenu extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
+        jName_user = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -87,8 +107,8 @@ public class MainMenu extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel11.setText("Nombre Usuario");
+        jName_user.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jName_user.setText("Nombre Usuario");
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
@@ -104,7 +124,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGap(25, 25, 25)
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel11)
+                .addComponent(jName_user)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
                 .addGap(30, 30, 30))
@@ -116,7 +136,7 @@ public class MainMenu extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel11)
+                        .addComponent(jName_user)
                         .addComponent(jLabel12)))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -475,7 +495,6 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -488,6 +507,7 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jName_user;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;

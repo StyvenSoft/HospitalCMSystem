@@ -73,5 +73,41 @@ public class Usuario {
         this.state = state;
     }
     
+    private static ConnectionDB connex = new ConnectionDB();
     
+    public boolean loginn(Usuario usr) {
+        
+        PreparedStatement ps;
+        ResultSet rs;
+        connex.setupConnection();
+        
+        String sql = "SELECT * FROM `usuario` WHERE `nombre_usuario` =?";
+        
+        try{
+            ps = connex.conn.prepareStatement(sql);
+            ps.setString(1, usr.getUsername());
+            rs = ps.executeQuery();
+            
+            if (rs.next()) {
+                if (usr.getPassword().equals(rs.getString(4))) {
+                    
+                    usr.setId_user(rs.getInt(1));
+                    usr.setUsername(rs.getString(2));
+                    usr.setUser_type(rs.getString(3));
+                    usr.setPassword(rs.getString(4));
+                    usr.setState(rs.getString(5));
+                    
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println(ex);
+            return false;
+        }
+        
+        return false;
+        
+    }
 }

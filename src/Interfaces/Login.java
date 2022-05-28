@@ -5,6 +5,7 @@
 package Interfaces;
 
 import ModelConnection.ConnectionDB;
+import Variables.Usuario;
 import javax.swing.JOptionPane;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -104,8 +105,6 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/user.png"))); // NOI18N
 
-        jT_password.setText("jPasswordField1");
-
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -191,37 +190,26 @@ public class Login extends javax.swing.JFrame {
     
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         
-        String nombre_usuario = jT_user.getText();
+        Usuario nusu = new Usuario();
+        
         String password = String.valueOf(jT_password.getPassword());
+        String nombre_usuario = jT_user.getText();
         
         if(nombre_usuario.equals("") || password.equals("")) {
             JOptionPane.showMessageDialog(null, "Los campos estan vacios!");
         } else {
-            try {
-//                String user = jT_user.getText();
-//                String pass = jT_password.getText();
+            
+            nusu.setUsername(nombre_usuario);
+            nusu.setPassword(password);
+            
+            if(nusu.loginn(nusu)) {
                 
-                connex.setupConnection();
-        
-                String sql = "SELECT * FROM `usuario` WHERE `nombre_usuario` ='"+nombre_usuario+"' AND `password` ='"+password+"' ";
+                MainMenu viewMenu = new MainMenu(nusu);
+                viewMenu.setVisible(true);
+                this.dispose();
                 
-                PreparedStatement ps = connex.conn.prepareStatement(sql);
-                rs = ps.executeQuery();
-                
-                if (rs.next()) {
-                    
-                   MainMenu viewMenu = new MainMenu();
-                   viewMenu.setVisible(true);
-                   this.dispose();
-                   
-                } else {
-                    JOptionPane.showMessageDialog(null, "Credenciales incorrectas!");
-                }
-                
-            } catch (SQLException e) {
-                //Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-                System.err.println(e);
-                JOptionPane.showMessageDialog(null, e.toString());
+            } else {
+                JOptionPane.showMessageDialog(null, "Los datos son incorrectos");
             }
         }
     }//GEN-LAST:event_jButton1MouseClicked

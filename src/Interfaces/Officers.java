@@ -26,7 +26,7 @@ public class Officers extends javax.swing.JFrame {
     public Officers() {
         initComponents();
         setLocationRelativeTo(null);
-         listingOfficer();
+        listingOfficer();
     }
 
     private static ConnectionDB connex = new ConnectionDB();
