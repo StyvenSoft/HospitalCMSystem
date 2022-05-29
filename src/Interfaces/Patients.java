@@ -4,11 +4,15 @@
  */
 package Interfaces;
 
+import ModelConnection.ConnectionDB;
 import Variables.Patient;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -22,8 +26,12 @@ public class Patients extends javax.swing.JFrame {
     public Patients() {
         initComponents();
         setLocationRelativeTo(null);
+        listingPatients();
+        jButton4.setEnabled(false);
     }
-
+    
+    private static ConnectionDB connex = new ConnectionDB();
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -63,7 +71,7 @@ public class Patients extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTPatients = new javax.swing.JTable();
 
         jLabel14.setText("Nombre Usuario");
 
@@ -74,7 +82,7 @@ public class Patients extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Nombre Usuario");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
         jLabel12.setText("Registro de Pacientes");
 
@@ -87,7 +95,7 @@ public class Patients extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 814, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 793, Short.MAX_VALUE)
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel13)
@@ -213,6 +221,11 @@ public class Patients extends javax.swing.JFrame {
         jButton3.setText("Buscar");
 
         jButton4.setText("Editar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Guardar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -228,15 +241,20 @@ public class Patients extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTPatients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tipo Identificación", "Número Identificación", "Nombre Paciente", "Fecha Nacimiento", "Dirección", "Número Celular", "Grupo Edad", "Género"
+                "id_paciente", "tipo_id", "nombres_paciente", "apellidos_paciente", "fecha_nacimiente", "direccion_residencia", "num_celular", "grupo_edad", "genero_paciente"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jTPatients.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTPatientsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTPatients);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -275,7 +293,7 @@ public class Patients extends javax.swing.JFrame {
                     .addComponent(jButton3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 40, Short.MAX_VALUE))
+                .addGap(0, 39, Short.MAX_VALUE))
         );
 
         pack();
@@ -291,17 +309,69 @@ public class Patients extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             // TODO add your handling code here:
+            String document = jT_num_id.getText();
+            if("".equals(document)){
+                JOptionPane.showMessageDialog(null, "Debe ingresa el numero de documento del paciente!");
+            } 
             create_patient();
-            System.out.println("Registro Almacenado!");
+            System.out.println("Registro Almacenado con exito!");
             JOptionPane.showMessageDialog(null, "Registro Almacenado");
             jT_num_id.setText("");
             jT_name.setText("");
             jT_lastname.setText("");
             jT_num_phone.setText("");
+            jT_recidence.setText("");
+            listingPatients();
         } catch (SQLException ex) {
             Logger.getLogger(Patients.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            String document = jT_num_id.getText();
+            
+            if("".equals(document)){
+                JOptionPane.showMessageDialog(null, "Debe ingresa el numero de documento!");
+            }
+            update_patient();
+            System.out.println("Registro Actualizado!");
+            JOptionPane.showMessageDialog(null, "Registro Actualizado");
+            jT_num_id.setText("");
+            jT_name.setText("");
+            jT_lastname.setText("");
+            jT_num_phone.setText("");
+            jT_recidence.setText("");
+            listingPatients();
+        } catch (SQLException ex) {
+            Logger.getLogger(Officers.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jTPatientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTPatientsMouseClicked
+        // TODO add your handling code here:
+        int line = jTPatients.getSelectedRow();
+        if (line == -1) {
+            JOptionPane.showMessageDialog(null, "No se selecciono!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Se selecciono paciente!");
+            
+            int num_id = Integer.parseInt((String) jTPatients.getValueAt(line,0).toString());
+            String name = (String) jTPatients.getValueAt(line,2);
+            String lastName = (String) jTPatients.getValueAt(line,3);
+            String address = (String) jTPatients.getValueAt(line,5);
+            String num_phone = (String) jTPatients.getValueAt(line,6).toString();
+            
+            jT_num_id.setText(""+ num_id);
+            jT_name.setText(name);
+            jT_lastname.setText(lastName);
+            jT_recidence.setText(address);
+            jT_num_phone.setText(""+num_phone);
+            jButton4.setEnabled(true);
+        }
+    }//GEN-LAST:event_jTPatientsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -354,6 +424,73 @@ void create_patient() throws SQLException {
     pat.insertPatient();
 }
 
+public void listingPatients() {
+       String sql = "SELECT * FROM `paciente`";
+       ResultSet rs;
+       DefaultTableModel model;
+           
+       try {
+           connex.setupConnection();
+           PreparedStatement ps = connex.conn.prepareStatement(sql);
+           rs = ps.executeQuery();
+           
+           Object[] patient = new Object[10];
+           
+           model = (DefaultTableModel) jTPatients.getModel();
+           
+           while (model.getRowCount()>0) {
+             model.removeRow(0);
+            }
+           
+           while(rs.next()){
+               patient[0] = rs.getInt("id_paciente");
+               patient[1] = rs.getString("tipo_id");
+               patient[2] = rs.getString("nombres_paciente");
+               patient[3] = rs.getString("apellidos_paciente");
+               patient[4] = rs.getString("fecha_nacimiente");
+               patient[5] = rs.getString("direccion_residencia");
+               patient[6] = rs.getString("num_celular");
+               patient[7] = rs.getString("grupo_edad");
+               patient[8] = rs.getString("genero_paciente");
+               
+               model.addRow(patient);
+           }
+           jTPatients.setModel(model);
+           
+       } catch (SQLException e) {
+           System.out.println(e.toString());
+       } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
+    }
+
+void update_patient() throws SQLException {
+        Patient patie = new Patient(
+            jT_recidence.getText(),
+            jCB_age_group.getSelectedItem().toString(),
+            Integer.parseInt(jT_num_id.getText()),
+            jCB_id_type.getSelectedItem().toString(),
+            jT_name.getText(),
+            jT_lastname.getText(),
+            jD_birthday.getDate().toString(),
+            jT_num_phone.getText(),     
+            jCB_gender.getSelectedItem().toString()
+    );
+    
+    patie.updatePatient(
+            Integer.parseInt(jT_num_id.getText()),
+            jCB_id_type.getSelectedItem().toString(),
+            jT_name.getText(),
+            jT_lastname.getText(),
+            jD_birthday.getDate().toString(),
+            jT_recidence.getText(),
+            jT_num_phone.getText(),
+            jCB_age_group.getSelectedItem().toString(),
+            jCB_gender.getSelectedItem().toString()
+        );
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -379,12 +516,12 @@ void create_patient() throws SQLException {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTPatients;
     private javax.swing.JTextField jT_lastname;
     private javax.swing.JTextField jT_name;
     private javax.swing.JTextField jT_num_id;
     private javax.swing.JTextField jT_num_phone;
     private javax.swing.JTextField jT_recidence;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField6;
     // End of variables declaration//GEN-END:variables
 }

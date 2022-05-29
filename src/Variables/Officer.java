@@ -98,9 +98,6 @@ public class Officer extends Person {
 
         PreparedStatement ps = connex.conn.prepareStatement(selection);
         
-     
-
-        
         try{
             ps.executeUpdate(selection);
         } catch(SQLException e) {

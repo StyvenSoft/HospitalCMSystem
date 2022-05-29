@@ -66,4 +66,20 @@ public class Patient extends Person {
             System.out.println("Conexion cerrada");
         }
     }
+    
+    public void updatePatient(int id, String id_type, String names, String lastNames, String birtDate, String recidence_adress, String phoneNumber, String age_group, String gender) throws SQLException {
+        connex.setupConnection();
+        String selection = "UPDATE `paciente` SET `tipo_id`='"+id_type+"',`nombres_paciente`='"+names+"',`apellidos_paciente`='"+lastNames+"',`fecha_nacimiente`='"+birtDate+"',`direccion_residencia`='"+recidence_adress+"',`num_celular`='"+phoneNumber+"',`grupo_edad`='"+age_group+"',`genero_paciente`='"+gender+"' WHERE `id_paciente`='"+id+"'";
+       
+        PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+        try{
+            ps.executeUpdate(selection);
+        } catch(SQLException e) {
+            System.err.println(e);
+        } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
+    }
 }

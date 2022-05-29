@@ -431,8 +431,8 @@ public class Officers extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Debe ingresa el numero de documento!");
             } 
             update_officer();
-            System.out.println("Registro Almacenado!");
-            JOptionPane.showMessageDialog(null, "Registro Almacenado");
+            System.out.println("Registro actualizado!");
+            JOptionPane.showMessageDialog(null, "Registro Actualizado");
             jT_num_id.setText("");
             jT_name.setText("");
             jT_lastname.setText("");
