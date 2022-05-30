@@ -8,14 +8,12 @@ import ModelConnection.ConnectionDB;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import javax.swing.JOptionPane;
 
 /**
  *
  * @author Acer
  */
 public class Usuario {
-    private int id_user;
     private String username;
     private String user_type;
     private String password;
@@ -25,20 +23,11 @@ public class Usuario {
         
     }
 
-    public Usuario(int id_user, String username, String user_type, String password, String state) {
-        this.id_user = id_user;
+    public Usuario(String username, String user_type, String password, String state) {
         this.username = username;
         this.user_type = user_type;
         this.password = password;
         this.state = state;
-    }
-
-    public int getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
     }
 
     public String getUsername() {
@@ -75,6 +64,27 @@ public class Usuario {
     
     private static ConnectionDB connex = new ConnectionDB();
     
+    public void insertUser() throws SQLException {
+        
+        connex.setupConnection();
+        String selection = "INSERT INTO `usuario`(`nombre_usuario`, `tipo_usuario`, `password`, `estado`)"+ " VALUES (?,?,?,?)";
+        
+        PreparedStatement ps = connex.conn.prepareStatement(selection);
+        
+        try{
+            ps.setString(1, username);
+            ps.setString(2, user_type);
+            ps.setString(3, password);
+            ps.setString(4, state);
+            ps.executeUpdate();
+        } catch(SQLException e) {
+            System.err.println(e);
+        } finally {
+            connex.closeConnection();
+            System.out.println("Conexion cerrada");
+        }
+    }
+    
     public boolean loginn(Usuario usr) {
         
         PreparedStatement ps;
@@ -91,7 +101,7 @@ public class Usuario {
             if (rs.next()) {
                 if (usr.getPassword().equals(rs.getString(4))) {
                     
-                    usr.setId_user(rs.getInt(1));
+                    //usr.setId_user(rs.getInt(1));
                     usr.setUsername(rs.getString(2));
                     usr.setUser_type(rs.getString(3));
                     usr.setPassword(rs.getString(4));
